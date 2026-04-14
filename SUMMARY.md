@@ -6,6 +6,7 @@
 
 * [Current implementation status](docs/architecture/current-implementation.md)
 * [System architecture](docs/architecture/overview.md)
+* [Key sequence flows](docs/architecture/key-sequence-flows.md)
 * [Monorepo and services map](docs/platform/source-layout.md)
 * [Developer change workflow](docs/platform/developer-change-workflow.md)
 * [Companion repositories](docs/workspace/companion-repositories.md)
@@ -37,4 +38,5 @@
 * [Authentication and authorization](docs/security/README.md)
 * [Deployment and operations](docs/operations/deployment-operations.md)
 * [Staging automation](docs/operations/staging-automation.md)
+
 

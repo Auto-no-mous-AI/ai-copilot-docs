@@ -13,6 +13,12 @@ Sign in with:
 
 After login, you should land on the Applications page.
 
+## Applications landing experience
+
+The screenshot below shows the live local demo after sign-in, including the three seeded applications.
+
+![Applications list](../../assets/screenshots/apps-list.png)
+
 ## Seeded applications and what each one proves
 
 ### 1. Supplier Portal Copilot
@@ -88,6 +94,8 @@ Why it matters:
 
 This is where a real tenant defines what the copilot should know and how it should behave.
 
+![Supplier configuration](../../assets/screenshots/supplier-configuration.png)
+
 ## Sources page
 
 Open:
@@ -142,6 +150,8 @@ Why it matters:
 
 This is the handoff point between the platform and a tenant host application.
 
+![Install snippets](../../assets/screenshots/supplier-install.png)
+
 ## Usage page
 
 Open:
@@ -163,6 +173,8 @@ What the demo data shows:
 Why it matters:
 
 This validates usage events, aggregation, and timeseries APIs.
+
+![Usage analytics](../../assets/screenshots/supplier-usage.png)
 
 ## Ingestion page
 
@@ -187,6 +199,8 @@ Why it matters:
 
 This validates the operations surface for repo and docs ingestion.
 
+![Ingestion insights](../../assets/screenshots/supplier-ingestion.png)
+
 ## Audit page
 
 Open:
@@ -210,6 +224,8 @@ Why it matters:
 
 This proves the platform is recording sensitive admin actions.
 
+![Audit logs](../../assets/screenshots/supplier-audit.png)
+
 ## Conversations page
 
 Open:
@@ -227,6 +243,8 @@ What to verify:
 Why it matters:
 
 This page is the best single operational view into chat behavior, agent lifecycle, and human approvals.
+
+![Conversations and approval queue](../../assets/screenshots/supplier-conversations.png)
 
 ## Approval queue walkthrough
 
@@ -281,17 +299,6 @@ Why it matters:
 
 This is the entry point for platform-managed model routing and provider selection.
 
-## What a developer should understand after this walkthrough
-
-By the end of this walkthrough, a developer should understand:
-
-- how tenants and applications are represented
-- where data sources come from
-- how ingestion and retrieval connect to chat
-- how approvals are surfaced operationally
-- how install tokens and API keys are generated
-- how the seeded scenarios map to Angular, React, and vanilla host applications
-
 ## Suggested screenshots for onboarding
 
 If you want to make the runbook even easier for new developers, capture screenshots for these views:
@@ -303,7 +310,17 @@ If you want to make the runbook even easier for new developers, capture screensh
 - Audit page showing seeded admin actions
 - Conversations page with approval queue visible
 - Install page showing the script and npm snippets
-- Keycloak login page and post-login landing on /apps`r
+- Keycloak login page and post-login landing on `/apps`
 
 These are the most helpful visuals for onboarding because they connect the seeded demo data to the real product screens.
 
+## What a developer should understand after this walkthrough
+
+By the end of this walkthrough, a developer should understand:
+
+- how tenants and applications are represented
+- where data sources come from
+- how ingestion and retrieval connect to chat
+- how approvals are surfaced operationally
+- how install tokens and API keys are generated
+- how the seeded scenarios map to Angular, React, and vanilla host applications
