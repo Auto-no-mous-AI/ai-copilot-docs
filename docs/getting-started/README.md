@@ -1,56 +1,74 @@
-# Local setup & first environment
+﻿# Local setup and first environment
 
-This chapter summarizes how developers run the full stack. Authoritative step-by-step detail also exists in **`ai-copilot-platform`** (`README.md`, `docs/get-started.md`, `docs/deployment-guide.md`).
+This section is the best place to start when you want to understand the implementation by running it on your machine.
 
-## Prerequisites
+## Recommended reading order
 
-- **Node.js** 20.x
-- **pnpm** 8.x (version pinned in platform `package.json` as `packageManager`)
-- **Docker** (for Postgres, Redis, Keycloak, etc. in the bundled environment)
-- **PowerShell** on Windows for first-env scripts (optional on Unix if you adapt paths)
+1. [Run locally step by step](run-locally-step-by-step.md)
+2. [Local demo walkthrough](local-demo-walkthrough.md)
+3. [Authentication and authorization](../security/README.md)
+4. [Deployment and operations](../operations/deployment-operations.md)
 
-## Minimal local development
+## Two ways to run the platform
 
-1. Copy **`.env.example`** to **`.env`** in `ai-copilot-platform` and set database, Redis, auth, and model provider variables.
-2. Start infrastructure: `pnpm db:up` (from platform root).
-3. Install dependencies: `pnpm install`.
-4. Apply migrations: `pnpm db:migrate` (runs API migration runner).
-5. Run processes in separate terminals:
-   - `pnpm dev:api`
-   - `pnpm dev:worker`
-   - `pnpm dev:admin`
-   - `pnpm dev:marketing`
+### Option 1: first environment bootstrap
 
-## First login
+Use this when you want the closest thing to a real environment on a developer machine.
 
-- With **`DEV_LOGIN_ENABLED=true`**, use the admin portal **developer login** screen.
-- For **OIDC**, configure `OIDC_*` variables and use `/api/auth/oidc/start` (see [Authentication & authorization](../security/README.md)).
+It brings up:
 
-## Full “first environment” bootstrap
+- PostgreSQL
+- Redis
+- MinIO
+- Keycloak
+- API
+- ingestion worker
+- admin portal
+- marketing site
+- Prometheus
 
-From `ai-copilot-platform` root:
+This is the preferred path for onboarding and verification.
 
-```powershell
-pnpm env:first
-pnpm deploy:first:up
-pnpm seed:first:demo
-pnpm smoke:first:env
-pnpm smoke:first:ui
-pnpm smoke:first:ui:approvals
-```
+### Option 2: minimal local development
 
-This provisions demo data, verifies API readiness and OIDC session behavior, and runs **Playwright** flows against the admin UI (including approvals).
+Use this when you only need to work on part of the system and want faster iteration.
 
-## Tenant bootstrap (manual)
+Typical pattern:
 
-After login:
+1. run local infra
+2. start the API in watch mode
+3. start the worker in watch mode
+4. start the Angular apps separately
 
-1. Create an **organization** and **application** (onboarding flow in admin UI or `POST /api/onboarding/bootstrap`).
-2. Configure **copilot config** (repo, branch, theme, feature flags).
-3. Add **sources** and trigger **reindex** (`POST /api/apps/:appId/sources/:sourceId/reindex`).
-4. Issue an **install token** from the install page (`POST /api/apps/:appId/install-token`).
-5. Embed using the **CDN loader** or **npm SDK** (see [SDKs](../sdk/README.md)).
+## Current local defaults
 
-## Demo HTML shell
+The first environment uses these default local URLs:
 
-The platform repo includes `demo/tenant-shell.html` to validate install token, theming, and approval UX against a real app ID and token.
+- admin: `http://127.0.0.1:4200`
+- API: `http://127.0.0.1:3000/api`
+- marketing: `http://127.0.0.1:4300`
+- Keycloak: `http://127.0.0.1:8080`
+- Prometheus: `http://127.0.0.1:9090`
+- MinIO console: `http://127.0.0.1:9001`
+
+## Demo login
+
+The generated first environment uses this demo account:
+
+- email: `owner@local.autonomous.ai`
+- password: `Copilot123!`
+
+## What happens after bootstrap
+
+After running the first-environment commands, the demo seed creates:
+
+- one demo organization
+- three demo applications
+- demo usage analytics
+- demo audit logs
+- demo sources and ingestion jobs
+- demo conversations
+- demo approval requests
+- demo agent runs and agent steps
+
+That seeded data is what powers the walkthrough in [Local demo walkthrough](local-demo-walkthrough.md).

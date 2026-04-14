@@ -1,53 +1,61 @@
-# Angular applications
+﻿# Angular applications
 
-Two first-party SPAs ship from `ai-copilot-platform/apps/`.
+Two first-party Angular applications ship from `ai-copilot-platform/apps`.
 
-## Admin portal (`apps/admin-portal`)
+## Admin portal
 
-**Purpose:** authenticated operations console for tenants.
+Path: `apps/admin-portal`
 
-### Routes (from `app.routes.ts`)
+Purpose: authenticated enterprise operations console.
 
-| Path | Screen |
-|------|--------|
-| `/login` | Login (dev / SSO) |
-| `/onboarding` | Initial org/app bootstrap |
-| `/apps` | Application list |
-| `/apps/:id/configuration` | Repo, branch, docs, feature flags |
-| `/apps/:id/sources` | Data sources |
-| `/apps/:id/theme` | Theme editor |
-| `/apps/:id/install` | Install token + embed snippets |
-| `/apps/:id/usage` | Usage analytics |
-| `/apps/:id/ingestion` | Ingestion jobs & insights |
-| `/apps/:id/audit` | Audit log |
-| `/apps/:id/conversations` | Conversation explorer |
-| `/settings/access` | Access / membership settings |
-| `/settings/models` | Model catalog management |
-
-All routes except `/login` use **`authGuard`** (`canActivate`).
-
-### Integration pattern
-
-The admin UI calls the Nest API under `/api` (configure environment `apiBaseUrl` or equivalent in the app’s environment files — see `apps/admin-portal/src/environments` in the platform repo).
-
-## Marketing web (`apps/marketing-web`)
-
-**Purpose:** public marketing pages.
-
-### Routes
+### Main routes
 
 | Path | Screen |
 |------|--------|
-| `/` | Home |
-| `/product` | Product |
-| `/security` | Security |
-| `/pricing` | Pricing |
-| `/get-started` | Get started |
-| `/docs` | Docs placeholder |
-| `/contact-sales` | Contact |
+| `/login` | login screen |
+| `/onboarding` | organization and first app bootstrap |
+| `/apps` | applications list |
+| `/apps/:id/configuration` | repo, branch, docs, feature flags |
+| `/apps/:id/sources` | source management |
+| `/apps/:id/theme` | chat theme editor |
+| `/apps/:id/install` | install tokens and embed snippets |
+| `/apps/:id/usage` | usage analytics |
+| `/apps/:id/ingestion` | ingestion jobs and insights |
+| `/apps/:id/audit` | audit log |
+| `/apps/:id/conversations` | conversations, approvals, agent runs |
+| `/settings/access` | organization members and roles |
+| `/settings/models` | model routing settings |
 
-No session guard on these routes.
+All routes except `/login` use the auth guard.
 
-## SDK usage from Angular hosts
+### Runtime integration
 
-Customer applications can consume **`@auto-no-mous/copilot-angular`** (see [SDKs](../sdk/README.md)) or the **web loader** script tag produced by the install token API.
+The admin app talks to the NestJS API under `/api`.
+
+For deployed environments, it supports runtime API-base injection through `public/runtime-config.js`.
+
+## Marketing web
+
+Path: `apps/marketing-web`
+
+Purpose: public-facing product website.
+
+### Main routes
+
+| Path | Screen |
+|------|--------|
+| `/` | home |
+| `/product` | product overview |
+| `/security` | security story |
+| `/pricing` | pricing |
+| `/get-started` | onboarding and CTA page |
+| `/docs` | docs placeholder |
+| `/contact-sales` | contact page |
+
+This app does not require a session.
+
+## Why these two apps matter for developers
+
+- the admin portal is the operational source of truth for the platform
+- the marketing site demonstrates the public product story and launch flow
+- together they cover the top-level user journeys for internal operators and external prospects

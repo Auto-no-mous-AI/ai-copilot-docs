@@ -1,67 +1,104 @@
-# Authentication & authorization
+﻿# Authentication and authorization
 
-## Session authentication (admin)
+## Session authentication for the admin portal
 
-- **`SessionAuthGuard`** is registered globally in `AuthModule` (`APP_GUARD`).
-- Routes marked **`@Public()`** skip session enforcement (health, metrics, OIDC, dev login, chat, embed).
-- Session cookies back the **`/auth/me`** and admin **`/apps/**`** APIs.
+- `SessionAuthGuard` is registered globally in `AuthModule`.
+- Routes marked with `@Public()` bypass session enforcement.
+- Session cookies protect `/api/auth/me` and the admin application APIs.
 
-### OIDC (enterprise SSO)
+## OIDC support
 
-Configure standard OIDC variables (see platform `docs/auth-and-sso.md`):
+The platform supports generic OIDC SSO.
 
-- `OIDC_ISSUER_URL`, `OIDC_INTERNAL_ISSUER_URL` (split-horizon IdP access)
-- `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, `OIDC_REDIRECT_URI`, `OIDC_SCOPES`
+Important variables:
 
-Flows:
+- `OIDC_ISSUER_URL`
+- `OIDC_INTERNAL_ISSUER_URL`
+- `OIDC_CLIENT_ID`
+- `OIDC_CLIENT_SECRET`
+- `OIDC_REDIRECT_URI`
+- `OIDC_SCOPES`
 
-- `GET /api/auth/oidc/start` — begins redirect
-- `GET /api/auth/oidc/callback` — exchanges code, establishes session
+Key routes:
 
-### Developer login
+- `GET /api/auth/oidc/start`
+- `GET /api/auth/oidc/callback`
 
-`POST /api/auth/dev-login` is **public** but should only be enabled in controlled environments (`DEV_LOGIN_ENABLED` pattern — confirm env flag name in `AuthService` / config in the platform repo).
+The first environment uses local Keycloak as the OIDC provider.
 
-### Production hardening (recommended)
+## Developer login
 
-- `COOKIE_SECURE=true`
-- `AUTH_ALLOWED_EMAIL_DOMAINS` when restricting tenant access
-- Rotate `AUTH_SESSION_SECRET` via secret manager
+For local development outside the first environment, the platform can use developer login through:
 
-## Chat & embed authentication (host applications)
+- `POST /api/auth/dev-login`
+
+This is controlled by:
+
+- `DEV_LOGIN_ENABLED`
+
+In the generated first environment, this is intentionally disabled because the docs and smoke flows validate the real OIDC path.
+
+## Chat and embed authentication
 
 ### API keys
 
-Hashed keys stored in **`app_api_keys`**. Clients send:
+Application API keys are stored hashed in `app_api_keys`.
 
-- `Authorization: Bearer <key>` or
+Supported client headers:
+
+- `Authorization: Bearer <key>`
 - `x-copilot-api-key: <key>`
-
-Verified in `ChatController.authorizeChatRequest`.
 
 ### Install tokens
 
-Short-lived tokens issued per **application** + **environment**. Clients send:
+Install tokens are issued per application and environment.
+
+Supported client headers:
 
 - `x-copilot-install-token`
-- `x-copilot-env`: `dev` | `staging` | `prod`
+- `x-copilot-env`
 
-### Domain allowlist
+These are used by the widget and embed config flow.
 
-`applications.domain_allowlist` stores allowed **host** entries. For **install-token** auth, chat and embed endpoints compare **Origin** or **Referer** against the allowlist, supporting `*.example.com` suffix wildcards.
+## Domain allowlist
 
-## Authorization (RBAC)
+`applications.domain_allowlist` contains allowed hosts.
 
-`AccessService` methods enforce:
+For install-token authentication, chat and embed flows compare the request `Origin` or `Referer` against this allowlist, including wildcard entries like `*.example.com`.
 
-- **Organization** membership and roles for onboarding and org-level APIs.
-- **Application** membership for read APIs.
-- **Application** role subsets for mutations (for example **owner/admin** for tokens and approvals, **owner/admin/developer** for configuration and sources).
+## Authorization model
 
-## Audit
+`AccessService` enforces organization and application roles.
 
-Sensitive actions in `AppsController` call `recordAuditLog` with actor from the authenticated user (or headers for service-style calls — see `actorFromRequest`).
+Common roles:
 
-## Related platform docs
+- `owner`
+- `admin`
+- `developer`
+- `viewer`
 
-Authoritative detail: `ai-copilot-platform/docs/auth-and-sso.md`.
+Typical expectations:
+
+- owner and admin manage tokens, credentials, and approvals
+- owner, admin, and developer manage configuration and sources
+- viewers mostly consume read-only operational pages
+
+## Audit considerations
+
+Sensitive operational actions record audit log entries, including:
+
+- configuration changes
+- token issuance
+- API key creation and revocation
+- source reindex requests
+- tenant credential changes
+- approval reviews
+
+## Production hardening
+
+Recommended production settings include:
+
+- `COOKIE_SECURE=true`
+- `AUTH_ALLOWED_EMAIL_DOMAINS` when needed
+- secret-manager-backed rotation for `AUTH_SESSION_SECRET`
+- properly scoped tenant credentials instead of broad shared provider keys

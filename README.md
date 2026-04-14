@@ -1,31 +1,53 @@
-**AI Copilot — developer documentation**
+﻿# AI Copilot developer documentation
 
-This book describes the **current implementation** of the AI Copilot enterprise platform. The running system lives in the **`ai-copilot-platform`** monorepo (Angular admin + marketing apps, NestJS API, ingestion worker, PostgreSQL/pgvector, Redis, embeddable SDKs). Other folders under `ai-copilot-workspace` are mostly scaffolds or future splits; see [Companion repositories](docs/workspace/companion-repositories.md).
+This GitBook-style documentation describes the current implementation of the AI Copilot enterprise platform.
+
+The running system lives in `ai-copilot-platform`:
+
+- Angular admin portal
+- Angular marketing web
+- NestJS API
+- NestJS ingestion worker
+- PostgreSQL with pgvector
+- Redis and BullMQ
+- embeddable web, React, and Angular SDKs
+- first-environment bootstrap, smoke tests, and staging workflows
+
+Other repositories under `ai-copilot-workspace` are mostly scaffolds or planned future splits. See [Companion repositories](docs/workspace/companion-repositories.md).
 
 ## Who this is for
 
-- Engineers onboarding to the platform
-- Teams integrating the embeddable copilot into Angular/React/host apps
-- DevOps and SRE reviewing deployment, health checks, and smoke automation
+- engineers onboarding to the platform
+- frontend teams embedding the copilot widget
+- backend teams extending APIs, ingestion, and model routing
+- DevOps and SRE teams operating the local, staging, and production environments
 
-## How to read this book
+## How to use this book
 
-- Start with [System architecture](docs/architecture/overview.md) and [Monorepo & services map](docs/platform/source-layout.md).
-- Use [HTTP API reference](docs/api/README.md) when wiring clients or reviewing contracts.
-- Follow [Local setup & first environment](docs/getting-started/README.md) to run the stack locally.
+Start here if you want to understand the system quickly:
+
+1. [Current implementation status](docs/architecture/current-implementation.md)
+2. [System architecture](docs/architecture/overview.md)
+3. [Monorepo and services map](docs/platform/source-layout.md)
+4. [Run locally step by step](docs/getting-started/run-locally-step-by-step.md)
+5. [Local demo walkthrough](docs/getting-started/local-demo-walkthrough.md)
 
 ## Source of truth
 
-Implementation details are derived from the **`ai-copilot-platform`** repository. When code and docs diverge, **prefer the repository** and open a documentation PR.
+This repository explains the platform, but the source of truth is always the code in `ai-copilot-platform`.
 
-## GitBook-style navigation
+When code and docs diverge:
 
-This repository uses a classic GitBook layout:
+1. trust the platform repository
+2. update this docs repository immediately after
 
-- **`SUMMARY.md`** — table of contents (import into GitBook or compatible static site generators).
-- **`docs/`** — chapters as Markdown files.
+## GitBook / HonKit layout
 
-To publish with [GitBook](https://docs.gitbook.com/) or [HonKit](https://honkit.netlify.app/), point the book root at this repository and use `SUMMARY.md` as the structure file.
+This repository uses a classic GitBook-compatible structure:
+
+- `SUMMARY.md`: table of contents
+- `docs/`: chapter content
+- `book.json`: HonKit and plugin configuration
 
 ## Preview locally
 
@@ -36,33 +58,37 @@ npm install
 npm start
 ```
 
-This starts **[HonKit](https://honkit.netlify.app/)** (classic GitBook-compatible preview). Open the URL it prints (usually **http://localhost:4000**). To use another port:
+The local preview usually starts on `http://localhost:4000`.
+
+To use another port:
 
 ```bash
 npx honkit serve --port 4321
 ```
 
-**Static HTML output** (optional):
+To build static HTML:
 
 ```bash
 npm run build
 ```
 
-Output is written to **`_book/`** (ignored by git).
+Generated output is written to `_book/`.
 
-### Bundled GitBook-like features
+## What this book now covers
 
-Configuration lives in **`book.json`** (`plugins` and `pluginsConfig`).
+- the real local first-environment bootstrap flow
+- demo tenant seed data and what each seeded app demonstrates
+- all current admin portal areas
+- current API surface
+- auth, SDK, RAG, approvals, audit, usage, and staging automation
 
-| Feature | How it works |
-|--------|----------------|
-| **Mermaid** | [`honkit-plugin-mermaid`](https://www.npmjs.com/package/honkit-plugin-mermaid) renders fenced **mermaid** code blocks as diagrams. |
-| **Search** | Default search is replaced by [`honkit-plugin-search-plus`](https://www.npmjs.com/package/honkit-plugin-search-plus) for stronger full-text search (including code-oriented matches). The sidebar search field is styled larger via **`styles/website.css`**. |
-| **Prev / Next** | **`_layouts/website/page.html`** replaces the floating chevrons with a **two-column footer**: **Previous** in the left half (left-aligned), **Next** in the right half (right-aligned), equal column widths on desktop. |
-| **In this Chapter** | On viewports **≥1100px**, **`assets/ai-copilot-chapter-toc.js`** builds a **sticky mini-TOC** from **h2–h4** (with ids) in the article, with scroll highlighting. Hidden if there are no such headings or on small screens. |
-| **Light / Dark / System** | Use the **Theme** control in the **sticky top bar** (Font Awesome: sun / moon / desktop). **System** follows `prefers-color-scheme`. Choice is stored in **`localStorage`** (`ai-copilot-color-scheme`). Styling uses **`html[data-ai-effective]`** in **`styles/website.css`** + **`assets/ai-copilot-theme.js`**. |
-| **Fonts (GitBook)** | The **“A”** menu is still provided by **fontsettings** (font family / size and the legacy white·sepia·night color presets). Prefer the **Theme** control for light/dark/system; if both are used, the **Theme** toggle sets the main page/sidebar colors. |
+## Maintenance note
 
-Custom look-and-feel: edit **`styles/website.css`** (CSS variables and rules at the top).
+This docs repo should be updated whenever any of these change in `ai-copilot-platform`:
 
-**Without HonKit:** open any `docs/**/*.md` file in your editor and use its Markdown preview, or use [GitBook.com](https://gitbook.com) / another static generator that imports `SUMMARY.md`.
+- routes
+- environment variables
+- smoke tests
+- staging workflows
+- demo tenant shape
+- SDK install contracts
