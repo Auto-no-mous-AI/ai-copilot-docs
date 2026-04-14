@@ -1,0 +1,8 @@
+# GitBook / static site generators: structure file
+# See https://docs.gitbook.com/ for import instructions
+
+root: ./
+
+structure:
+  readme: README.md
+  summary: SUMMARY.md

@@ -1,0 +1,84 @@
+{% extends template.self %}
+
+{% block head %}
+{{ super() }}
+<script>
+(function () {
+  var STORAGE_KEY = 'ai-copilot-color-scheme';
+  function effective() {
+    try {
+      var v = localStorage.getItem(STORAGE_KEY) || 'system';
+      if (v === 'light') return 'light';
+      if (v === 'dark') return 'dark';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } catch (e) {
+      return 'light';
+    }
+  }
+  try {
+    var pref = localStorage.getItem(STORAGE_KEY) || 'system';
+    document.documentElement.setAttribute('data-ai-color-scheme', pref);
+    document.documentElement.setAttribute('data-ai-effective', effective());
+    document.documentElement.style.colorScheme = effective() === 'dark' ? 'dark' : 'light';
+  } catch (ignored) {}
+})();
+</script>
+{% endblock %}
+
+{#
+  Prev/Next must live INSIDE .page-inner (via search_results), not in book_navigation.
+  Theme uses .body-inner { position:absolute; inset:0 } which covers siblings — footer
+  after body-inner was hidden behind the scroll layer.
+#}
+{% block search_results %}
+<div class="ai-copilot-page-layout">
+<div class="ai-copilot-page-main">
+<section class="normal markdown-section">
+{% block page %}
+{{ page.content|safe }}
+{% endblock %}
+</section>
+<section class="ai-copilot-doc-footer" aria-label="Section navigation">
+    <div class="ai-copilot-doc-footer__row">
+        <div class="ai-copilot-doc-footer__cell ai-copilot-doc-footer__cell--prev">
+            {% if page.previous and page.previous.path %}
+            <a
+                class="ai-copilot-doc-footer__link ai-copilot-doc-footer__link--prev"
+                href="{{ page.previous.path|resolveFile }}{{ page.previous.anchor }}"
+                rel="prev"
+            >
+                <span class="ai-copilot-doc-footer__dir">← Previous</span>
+                <span class="ai-copilot-doc-footer__title">{{ page.previous.title }}</span>
+            </a>
+            {% endif %}
+        </div>
+        <div class="ai-copilot-doc-footer__cell ai-copilot-doc-footer__cell--next">
+            {% if page.next and page.next.path %}
+            <a
+                class="ai-copilot-doc-footer__link ai-copilot-doc-footer__link--next"
+                href="{{ page.next.path|resolveFile }}{{ page.next.anchor }}"
+                rel="next"
+            >
+                <span class="ai-copilot-doc-footer__dir">Next →</span>
+                <span class="ai-copilot-doc-footer__title">{{ page.next.title }}</span>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+</div>
+<aside class="ai-copilot-chapter-toc-wrap" hidden aria-label="On this page">
+    <nav class="ai-copilot-chapter-toc" id="ai-copilot-chapter-toc"></nav>
+</aside>
+</div>
+{% endblock %}
+
+{# Suppress default fixed chevrons — navigation is inline in the page above #}
+{% block book_navigation %}
+{% endblock %}
+
+{% block javascript %}
+{{ super() }}
+<script src="{{ "assets/ai-copilot-theme.js"|resolveFile }}" defer></script>
+<script src="{{ "assets/ai-copilot-chapter-toc.js"|resolveFile }}" defer></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% block book_header %}
+<div class="book-header" role="navigation">
+    {% if glossary.path %}
+    <a href="{{ ('/' + glossary.path)|resolveFile }}" class="btn pull-left" aria-label="{{ "GLOSSARY_OPEN"|t }}"><i class="fa fa-sort-alpha-asc"></i></a>
+    {% endif %}
+
+    <div class="ai-copilot-theme-switcher pull-right" role="toolbar" aria-label="Color theme">
+        <span class="ai-copilot-theme-switcher__label">Theme</span>
+        <div class="ai-copilot-theme-switcher__group" role="group">
+            <button type="button" class="ai-copilot-theme-btn" data-ai-theme="light" title="Light theme" aria-label="Light theme">
+                <i class="fa fa-sun-o" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="ai-copilot-theme-btn" data-ai-theme="dark" title="Dark theme" aria-label="Dark theme">
+                <i class="fa fa-moon-o" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="ai-copilot-theme-btn" data-ai-theme="system" title="Use system color scheme" aria-label="System theme">
+                <i class="fa fa-desktop" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="{{ "/"|resolveFile }}" >{{ page.title }}</a>
+    </h1>
+</div>
+{% endblock %}

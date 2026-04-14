@@ -1,0 +1,28 @@
+{
+  "title": "AI Copilot Developer Documentation",
+  "description": "Developer documentation for the AI Copilot platform",
+  "root": ".",
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  },
+  "plugins": [
+    "-lunr",
+    "-search",
+    "search-plus",
+    "mermaid"
+  ],
+  "pluginsConfig": {
+    "search-plus": {},
+    "mermaid": {},
+    "fontsettings": {
+      "theme": "white",
+      "family": "sans",
+      "size": 2,
+      "themes": ["white", "sepia", "night"]
+    },
+    "theme-default": {
+      "showLevel": false
+    }
+  }
+}

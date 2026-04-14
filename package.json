@@ -1,0 +1,15 @@
+{
+  "name": "ai-copilot-docs",
+  "private": true,
+  "description": "GitBook-style Markdown; preview locally with HonKit",
+  "scripts": {
+    "start": "honkit serve",
+    "serve": "honkit serve",
+    "build": "honkit build"
+  },
+  "devDependencies": {
+    "honkit": "^5.1.5",
+    "honkit-plugin-mermaid": "^0.1.4",
+    "honkit-plugin-search-plus": "^1.0.0"
+  }
+}
