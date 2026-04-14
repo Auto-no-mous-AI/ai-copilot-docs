@@ -1,6 +1,6 @@
-﻿# Monorepo and services map
+# Monorepo and services map
 
-The implementation is a pnpm workspace rooted at `ai-copilot-platform`.
+The core runtime implementation is a pnpm workspace rooted at `ai-copilot-platform`, but it now sits inside a larger multi-repo workspace with companion repositories for SDKs, examples, infra, observability, security, and shared onboarding.
 
 ## Workspace layout
 
@@ -66,3 +66,32 @@ Default local URLs:
 The admin app supports runtime API base injection for deployed environments and uses route guards to protect every route except `/login`.
 
 The marketing site is a public Angular application with product and onboarding pages.
+
+## Companion repo map
+
+These sibling repositories round out the full implementation:
+
+| Repository | Main contents |
+|------------|---------------|
+| `ai-copilot-sdk` | framework-agnostic browser SDK, loader build, package release docs |
+| `ai-copilot-sdk-react` | React hook and wrapper around the browser SDK |
+| `ai-copilot-sdk-angular` | Angular provider and wrapper around the browser SDK |
+| `ai-copilot-marketing-site` | standalone Angular marketing site, Dockerfile, CI, release workflow |
+| `ai-copilot-examples` | vanilla, React, and Angular example hosts plus local bootstrap |
+| `ai-copilot-infra` | Kubernetes overlays, Terraform starter module, secret generation scripts |
+| `ai-copilot-observability` | Prometheus config, alerts, Grafana dashboards, OTEL collector config |
+| `ai-copilot-security` | policies, Rego checks, control matrix, evidence templates |
+| `ai-copilot-workspace-hub` | repo manifest, workspace bootstrap, workspace smoke, developer handbook |
+
+## Where developers usually start
+
+Pick the repo based on the thing you are changing:
+
+- product feature or admin/API behavior: `ai-copilot-platform`
+- SDK packaging or wrapper API: `ai-copilot-sdk*`
+- host-app integration examples: `ai-copilot-examples`
+- standalone public site delivery: `ai-copilot-marketing-site`
+- infra or deployment building blocks: `ai-copilot-infra`
+- monitoring and dashboards: `ai-copilot-observability`
+- policies and security controls: `ai-copilot-security`
+- cross-repo bootstrap or shared handbook: `ai-copilot-workspace-hub`

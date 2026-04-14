@@ -1,4 +1,4 @@
-﻿# Local setup and first environment
+# Local setup and first environment
 
 This section is the best place to start when you want to understand the implementation by running it on your machine.
 
@@ -6,8 +6,9 @@ This section is the best place to start when you want to understand the implemen
 
 1. [Run locally step by step](run-locally-step-by-step.md)
 2. [Local demo walkthrough](local-demo-walkthrough.md)
-3. [Authentication and authorization](../security/README.md)
-4. [Deployment and operations](../operations/deployment-operations.md)
+3. [New developer first day checklist](new-developer-first-day-checklist.md)
+4. [Authentication and authorization](../security/README.md)
+5. [Deployment and operations](../operations/deployment-operations.md)
 
 ## Two ways to run the platform
 
@@ -28,6 +29,19 @@ It brings up:
 - Prometheus
 
 This is the preferred path for onboarding and verification.
+
+### Option 1b: workspace-hub bootstrap
+
+Use this when you want to validate the companion repos together after the main platform is healthy.
+
+From `ai-copilot-workspace-hub`:
+
+```bash
+npm install
+npm run smoke:workspace
+```
+
+This validates the standalone SDK repos, examples repo, and standalone marketing site as a coordinated developer workspace.
 
 ### Option 2: minimal local development
 

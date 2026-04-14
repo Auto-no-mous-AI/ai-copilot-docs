@@ -1,19 +1,21 @@
-﻿# AI Copilot developer documentation
+# AI Copilot developer documentation
 
-This GitBook-style documentation describes the current implementation of the AI Copilot enterprise platform.
+This GitBook-style documentation describes the current AI Copilot implementation across the full repository family.
 
-The running system lives in `ai-copilot-platform`:
+The codebase now spans multiple active repositories:
 
-- Angular admin portal
-- Angular marketing web
-- NestJS API
-- NestJS ingestion worker
-- PostgreSQL with pgvector
-- Redis and BullMQ
-- embeddable web, React, and Angular SDKs
-- first-environment bootstrap, smoke tests, and staging workflows
+- `ai-copilot-platform`: main product monorepo with Angular apps, NestJS API, ingestion worker, first-environment bootstrap, and staging automation
+- `ai-copilot-sdk`: standalone framework-agnostic web SDK
+- `ai-copilot-sdk-react`: standalone React wrapper
+- `ai-copilot-sdk-angular`: standalone Angular wrapper
+- `ai-copilot-marketing-site`: standalone public website build and release pipeline
+- `ai-copilot-examples`: runnable vanilla, React, and Angular host examples
+- `ai-copilot-infra`: standalone Terraform, Kubernetes, and operator scripts
+- `ai-copilot-observability`: monitoring, dashboards, OTEL, and alerting assets
+- `ai-copilot-security`: policies, control matrix, threat models, and policy checks
+- `ai-copilot-workspace-hub`: parent workspace bootstrap, smoke validation, and handbook
 
-Other repositories under `ai-copilot-workspace` are mostly scaffolds or planned future splits. See [Companion repositories](docs/workspace/companion-repositories.md).
+See [Companion repositories](docs/workspace/companion-repositories.md) for the current role of each repo.
 
 ## Who this is for
 
@@ -29,16 +31,17 @@ Start here if you want to understand the system quickly:
 1. [Current implementation status](docs/architecture/current-implementation.md)
 2. [System architecture](docs/architecture/overview.md)
 3. [Monorepo and services map](docs/platform/source-layout.md)
-4. [Run locally step by step](docs/getting-started/run-locally-step-by-step.md)
-5. [Local demo walkthrough](docs/getting-started/local-demo-walkthrough.md)
+4. [Companion repositories](docs/workspace/companion-repositories.md)
+5. [Run locally step by step](docs/getting-started/run-locally-step-by-step.md)
+6. [Local demo walkthrough](docs/getting-started/local-demo-walkthrough.md)
 
 ## Source of truth
 
-This repository explains the platform, but the source of truth is always the code in `ai-copilot-platform`.
+This repository explains the platform, but the source of truth is always the code in the active implementation repositories.
 
 When code and docs diverge:
 
-1. trust the platform repository
+1. trust the relevant implementation repository
 2. update this docs repository immediately after
 
 ## GitBook / HonKit layout
@@ -77,14 +80,15 @@ Generated output is written to `_book/`.
 ## What this book now covers
 
 - the real local first-environment bootstrap flow
+- the workspace-hub bootstrap and smoke flow across companion repos
 - demo tenant seed data and what each seeded app demonstrates
 - all current admin portal areas
 - current API surface
-- auth, SDK, RAG, approvals, audit, usage, and staging automation
+- auth, SDK, RAG, approvals, audit, usage, release, observability, security, and staging automation
 
 ## Maintenance note
 
-This docs repo should be updated whenever any of these change in `ai-copilot-platform`:
+This docs repo should be updated whenever any of these change in the implementation repos:
 
 - routes
 - environment variables
@@ -92,3 +96,5 @@ This docs repo should be updated whenever any of these change in `ai-copilot-pla
 - staging workflows
 - demo tenant shape
 - SDK install contracts
+- standalone release workflows
+- workspace bootstrap expectations

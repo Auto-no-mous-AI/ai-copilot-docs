@@ -1,12 +1,16 @@
-﻿# Developer change workflow
+# Developer change workflow
 
 This chapter explains where developers should make changes in the workspace depending on the feature they are working on.
 
-## Rule one: start in `ai-copilot-platform`
+## Rule one: start in the repo that owns the contract
 
-Today, almost all real implementation changes belong in `ai-copilot-platform`.
+The platform is no longer a single-repo implementation. Start in the repository that owns the behavior you are changing, then trace outward if the change crosses boundaries.
 
-Do not start by editing the scaffold repositories unless the work has explicitly been extracted there.
+In practice:
+
+- product runtime, admin screens, API behavior, worker logic, seed data, and first-environment automation start in `ai-copilot-platform`
+- standalone package publishing starts in the relevant SDK repo
+- onboarding across multiple repos starts in `ai-copilot-workspace-hub`
 
 ## Quick decision guide
 
@@ -32,12 +36,14 @@ Go to:
 
 - `apps/marketing-web/src/app`
 - `apps/marketing-web/src/styles.scss`
+- `ai-copilot-marketing-site/src/app`
 
 Typical examples:
 
 - landing pages
 - pricing and security pages
 - public CTA flow
+- standalone marketing release assets
 
 ### I need to change the HTTP API
 
@@ -97,12 +103,15 @@ Typical examples:
 
 ### I need to change SDK behavior
 
-Go to:
+Usually go to one of these:
 
-- `packages/shared`
-- `packages/web-sdk`
-- `packages/react-sdk`
-- `packages/angular-sdk`
+- `ai-copilot-platform/packages/shared`
+- `ai-copilot-platform/packages/web-sdk`
+- `ai-copilot-platform/packages/react-sdk`
+- `ai-copilot-platform/packages/angular-sdk`
+- `ai-copilot-sdk`
+- `ai-copilot-sdk-react`
+- `ai-copilot-sdk-angular`
 
 Typical examples:
 
@@ -111,13 +120,18 @@ Typical examples:
 - framework wrappers
 - widget bootstrap contract
 
+Use the platform repo when the change affects the runtime contract or product integration path first. Use the standalone repos when the change affects package publishing, package-specific docs, or repo-specific CI/release behavior.
+
 ### I need to change deployment or smoke automation
 
 Go to:
 
-- `scripts/`
-- `.github/workflows/`
-- `infra/`
+- `ai-copilot-platform/scripts/`
+- `ai-copilot-platform/.github/workflows/`
+- `ai-copilot-platform/infra/`
+- `ai-copilot-workspace-hub/scripts/`
+- `ai-copilot-infra/`
+- `ai-copilot-observability/`
 
 Typical examples:
 
@@ -126,6 +140,8 @@ Typical examples:
 - smoke tests
 - staging automation
 - Docker or Kubernetes assets
+- cross-repo workspace smoke
+- standalone observability and infra validation
 
 ## Recommended implementation flow
 
@@ -172,6 +188,7 @@ Examples:
 - `pnpm smoke:first:env`
 - `pnpm smoke:first:ui`
 - `pnpm smoke:first:ui:approvals`
+- `npm run smoke:workspace` from `ai-copilot-workspace-hub`
 
 ### 5. Update docs when the contract changes
 
@@ -183,6 +200,8 @@ Update `ai-copilot-docs` whenever you change:
 - onboarding flow
 - install snippets
 - staging automation
+- release workflow behavior
+- repo ownership expectations
 
 ## Suggested file-by-file navigation
 
@@ -231,6 +250,7 @@ Look under:
 - `scripts/smoke-first-env.mjs`
 - `scripts/playwright-smoke.mjs`
 - `scripts/playwright-approval-smoke.mjs`
+- `ai-copilot-workspace-hub/scripts/smoke-workspace.ps1`
 
 When you change a critical user flow, consider whether one of these should change too.
 
@@ -258,6 +278,7 @@ Relevant files:
 - `.github/workflows/staging-deploy.yml`
 - `.github/workflows/staging-smoke.yml`
 - `scripts/configure-github-staging.mjs`
+- `ai-copilot-workspace-hub/scripts/smoke-workspace.ps1`
 
 ## Checklist before merging a meaningful change
 

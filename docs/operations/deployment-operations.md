@@ -1,4 +1,4 @@
-﻿# Deployment and operations
+# Deployment and operations
 
 This chapter summarizes how the platform is currently deployed and operated. Use it together with [Run locally step by step](../getting-started/run-locally-step-by-step.md) and [Staging automation](staging-automation.md).
 
@@ -79,6 +79,17 @@ The platform currently uses:
 
 See [Staging automation](staging-automation.md) for the complete setup flow.
 
+## Companion deployment and validation repos
+
+The wider program also includes dedicated repositories for specific operational concerns:
+
+- `ai-copilot-infra`: standalone Terraform, Kubernetes, and bootstrap helpers
+- `ai-copilot-observability`: Prometheus, Grafana, OTEL, and alerts
+- `ai-copilot-security`: policy packs, controls, and security evidence templates
+- `ai-copilot-workspace-hub`: cross-repo smoke and onboarding scripts
+
+These repos do not replace the platform bootstrap, but they are now part of the real delivery toolchain.
+
 ## Kubernetes
 
 Reference manifests live under `ai-copilot-platform/infra/k8s` and cover:
@@ -99,6 +110,8 @@ Typical order:
 4. deploy admin and marketing
 5. apply ingress
 
+For standalone infrastructure building blocks, also see `ai-copilot-infra/k8s` and `ai-copilot-infra/terraform`.
+
 ## Monitoring
 
 The API exposes:
@@ -110,6 +123,12 @@ The API exposes:
 Prometheus bootstrap config is in:
 
 `ai-copilot-platform/infra/monitoring/prometheus.yml`
+
+For standalone monitoring assets, also see:
+
+- `ai-copilot-observability/alerts`
+- `ai-copilot-observability/grafana`
+- `ai-copilot-observability/otel`
 
 ## Important environment variables
 
@@ -156,3 +175,14 @@ When something looks wrong, check in this order:
 7. admin login flow
 8. seeded apps and approval queue
 9. ingestion failures and audit logs
+
+## Cross-repo developer operations
+
+After the main platform is healthy, validate the wider repo family from `ai-copilot-workspace-hub`:
+
+```bash
+npm install
+npm run smoke:workspace
+```
+
+This is the fastest way to catch drift between the platform repo, standalone SDK repos, examples, and the standalone marketing site.

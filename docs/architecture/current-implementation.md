@@ -1,14 +1,22 @@
-﻿# Current implementation status
+# Current implementation status
 
-This chapter answers a simple question for the engineering team: what is real today, what is partially implemented, and what is still scaffolded.
+This chapter answers a simple question for the engineering team: what is real today, what is partially implemented, and where each kind of work now lives.
 
 ## Repositories that matter right now
 
-The real product implementation is in `ai-copilot-platform`.
+The current implementation is split across active repositories:
 
-The real documentation is in `ai-copilot-docs`.
-
-The other repositories in `ai-copilot-workspace` exist for future separation or packaging, but they are not the source of truth for runtime behavior today.
+- `ai-copilot-platform`: product runtime, admin UI, API, worker, data model, local environment, staging automation
+- `ai-copilot-docs`: developer and product documentation
+- `ai-copilot-sdk`: standalone browser SDK package
+- `ai-copilot-sdk-react`: standalone React wrapper package
+- `ai-copilot-sdk-angular`: standalone Angular wrapper package
+- `ai-copilot-marketing-site`: standalone marketing site with CI and release flow
+- `ai-copilot-examples`: runnable host application examples and local mock API
+- `ai-copilot-infra`: standalone infrastructure code and bootstrap helpers
+- `ai-copilot-observability`: monitoring, dashboards, alerts, and OTEL assets
+- `ai-copilot-security`: threat models, policies, controls, and policy checks
+- `ai-copilot-workspace-hub`: workspace bootstrap, workspace smoke, and cross-repo onboarding
 
 ## What is implemented end to end
 
@@ -66,11 +74,13 @@ The other repositories in `ai-copilot-workspace` exist for future separation or 
 - HTTP smoke test
 - Playwright UI smoke test
 - Playwright approval review smoke test
-- SDK build and release workflow
+- standalone SDK build and release workflows
 - staging deploy and staging smoke workflows
 - GitHub staging setup automation script
 - Prometheus metrics endpoint and sample config
 - Kubernetes reference manifests
+- standalone infra, observability, and security repositories with CI
+- workspace-hub bootstrap and cross-repo smoke validation
 
 ## What is intentionally lightweight today
 
@@ -80,22 +90,17 @@ These areas exist, but they are intentionally pragmatic rather than fully enterp
 - autonomous browser execution breadth
 - full production-grade secret management integration
 - production IdP hardening beyond the generic OIDC flow
-- dedicated standalone repos for SDKs, infra, security, and observability
+- cross-repo version coordination and shared release orchestration
+- production deployment specifics for a real staging or production cloud account
 
 ## What is scaffolded or future-facing
 
-These repositories are not the current runtime source of truth:
+Some areas are still reference-heavy or starter-grade even though the repos are now real and usable:
 
-- `ai-copilot-sdk`
-- `ai-copilot-sdk-react`
-- `ai-copilot-sdk-angular`
-- `ai-copilot-examples`
-- `ai-copilot-infra`
-- `ai-copilot-marketing-site`
-- `ai-copilot-observability`
-- `ai-copilot-security`
-
-Use them only as placeholders or future extraction targets.
+- cloud-specific Terraform modules beyond the starter platform module
+- production alert tuning and Grafana dashboard depth
+- advanced policy packs and evidence automation in the security repo
+- richer example applications that hit a live deployed tenant instead of the local mock path
 
 ## Recommended onboarding path
 
@@ -103,6 +108,7 @@ For a new developer joining the project, the shortest path to understanding the 
 
 1. read [System architecture](overview.md)
 2. read [Monorepo and services map](../platform/source-layout.md)
-3. follow [Run locally step by step](../getting-started/run-locally-step-by-step.md)
-4. follow [Local demo walkthrough](../getting-started/local-demo-walkthrough.md)
-5. use [HTTP API reference](../api/README.md) and [Chat, RAG, LLM, and approvals](../features/chat-rag-approvals.md) while making changes
+3. read [Companion repositories](../workspace/companion-repositories.md)
+4. follow [Run locally step by step](../getting-started/run-locally-step-by-step.md)
+5. follow [Local demo walkthrough](../getting-started/local-demo-walkthrough.md)
+6. use [HTTP API reference](../api/README.md) and [Chat, RAG, LLM, and approvals](../features/chat-rag-approvals.md) while making changes

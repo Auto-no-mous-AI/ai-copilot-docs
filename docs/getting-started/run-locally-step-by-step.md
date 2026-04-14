@@ -1,4 +1,4 @@
-﻿# Run locally step by step
+# Run locally step by step
 
 This is the practical developer runbook for understanding the implementation by running it on your own machine.
 
@@ -51,6 +51,27 @@ pnpm smoke:first:ui:approvals
 This is best for onboarding, demos, and end-to-end validation.
 
 For most new developers, start with first environment mode.
+
+## 2b. Understand the companion repo validation flow
+
+After the main platform is healthy, validate the sibling repositories from:
+
+`C:\Users\aparekh\Desktop\Projects\ai-copilot-workspace-hub`
+
+Use:
+
+```bash
+npm install
+npm run smoke:workspace
+```
+
+This checks:
+
+- web SDK build and lint
+- React SDK build and lint
+- Angular SDK build and lint
+- examples bootstrap and example builds
+- standalone marketing site build
 
 ## 3. Install dependencies
 
@@ -307,3 +328,16 @@ pnpm seed:first:demo
 ```
 
 again, then rerun the smoke tests.
+
+## 14. Validate the wider workspace
+
+Once the platform repo is healthy, validate the companion repos too.
+
+From `ai-copilot-workspace-hub`:
+
+```bash
+npm install
+npm run smoke:workspace
+```
+
+If you are working on SDK, examples, or standalone marketing changes, this cross-repo smoke is part of the expected developer workflow.

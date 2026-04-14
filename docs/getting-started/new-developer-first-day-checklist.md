@@ -1,4 +1,4 @@
-﻿# New developer first day checklist
+# New developer first day checklist
 
 This checklist is designed for a new engineer joining the project and trying to become productive on day one.
 
@@ -14,10 +14,18 @@ By the end of the first day, a developer should be able to:
 
 ## 1. Clone and orient yourself
 
-Make sure you have these two repositories locally:
+Make sure you have these repositories locally:
 
 - `ai-copilot-platform`
 - `ai-copilot-docs`
+- `ai-copilot-workspace-hub`
+
+If you are joining to work on packaging or integrations, also clone:
+
+- `ai-copilot-sdk`
+- `ai-copilot-sdk-react`
+- `ai-copilot-sdk-angular`
+- `ai-copilot-examples`
 
 Read in this order:
 
@@ -25,6 +33,7 @@ Read in this order:
 2. [System architecture](../architecture/overview.md)
 3. [Monorepo and services map](../platform/source-layout.md)
 4. [Developer change workflow](../platform/developer-change-workflow.md)
+5. [Companion repositories](../workspace/companion-repositories.md)
 
 ## 2. Bring up the local platform
 
@@ -84,12 +93,16 @@ You do not need to memorize everything. Just know where to start.
 - `packages/web-sdk`
 - `packages/react-sdk`
 - `packages/angular-sdk`
+- `ai-copilot-sdk`
+- `ai-copilot-sdk-react`
+- `ai-copilot-sdk-angular`
 
 ### Automation and operations
 
 - local bootstrap: `scripts/`
 - GitHub Actions: `.github/workflows/`
 - Kubernetes and infra: `infra/`
+- workspace bootstrap: `ai-copilot-workspace-hub`
 
 ## 6. Run the deeper smoke checks
 
@@ -105,6 +118,13 @@ This validates:
 - the admin UI flow
 - the approval lifecycle
 - key seeded operational pages
+
+If you are working across repos, also run from `ai-copilot-workspace-hub`:
+
+```bash
+npm install
+npm run smoke:workspace
+```
 
 ## 7. Read the contracts you will touch most often
 
@@ -146,5 +166,6 @@ A new developer has had a successful first day if they can say yes to these:
 - I can run the local first environment.
 - I can sign in and navigate the demo apps.
 - I know where frontend, backend, worker, and SDK code live.
+- I know when to work in the platform repo versus a companion repo.
 - I know how approvals fit into the product.
 - I know which docs to read before editing a core flow.
