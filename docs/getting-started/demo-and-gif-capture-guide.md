@@ -2,6 +2,16 @@
 
 This chapter explains how to capture short product demos and onboarding clips from the local first environment.
 
+## Embedded reference GIFs
+
+### Login flow
+
+![Login flow GIF](../../assets/demos/login-flow.gif)
+
+### Approval flow
+
+![Approval flow GIF](../../assets/demos/approval-flow.gif)
+
 ## Goal
 
 Create short, repeatable recordings that show the product clearly without requiring engineers to prepare a custom dataset every time.
@@ -166,7 +176,15 @@ Use this checklist:
 Recommended folders:
 
 - `assets/screenshots/` for static screenshots
-- `assets/demos/` for short GIFs or MP4s if you decide to version them here later
+- `assets/demos/` for short GIFs or MP4s
+
+To regenerate the GIFs from captured frames:
+
+```bash
+npm run build:demos
+```
+
+Frames currently live under `assets/demos/frames/`.
 
 If demo media becomes large, move it to external storage or release assets and link to it from the docs.
 

@@ -16,6 +16,7 @@
 * [Local setup and first environment](docs/getting-started/README.md)
 * [Run locally step by step](docs/getting-started/run-locally-step-by-step.md)
 * [Local demo walkthrough](docs/getting-started/local-demo-walkthrough.md)
+* [New developer first day checklist](docs/getting-started/new-developer-first-day-checklist.md)
 * [Demo and GIF capture guide](docs/getting-started/demo-and-gif-capture-guide.md)
 
 ## Backend
@@ -40,6 +41,7 @@
 * [Deployment and operations](docs/operations/deployment-operations.md)
 * [Staging automation](docs/operations/staging-automation.md)
 * [Troubleshooting gallery](docs/operations/troubleshooting-gallery.md)
+
 
 
 

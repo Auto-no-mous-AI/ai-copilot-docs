@@ -6,6 +6,8 @@ Use it together with [Run locally step by step](run-locally-step-by-step.md).
 
 ## Demo sign-in
 
+![Login flow GIF](../../assets/demos/login-flow.gif)
+
 Sign in with:
 
 - email: `owner@local.autonomous.ai`
@@ -248,6 +250,8 @@ This page is the best single operational view into chat behavior, agent lifecycl
 
 ## Approval queue walkthrough
 
+![Approval flow GIF](../../assets/demos/approval-flow.gif)
+
 The seed data already gives you useful examples:
 
 - Supplier Portal Copilot: pending approval
@@ -324,3 +328,4 @@ By the end of this walkthrough, a developer should understand:
 - how approvals are surfaced operationally
 - how install tokens and API keys are generated
 - how the seeded scenarios map to Angular, React, and vanilla host applications
+
