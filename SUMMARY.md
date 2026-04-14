@@ -7,6 +7,7 @@
 * [Current implementation status](docs/architecture/current-implementation.md)
 * [System architecture](docs/architecture/overview.md)
 * [Monorepo and services map](docs/platform/source-layout.md)
+* [Developer change workflow](docs/platform/developer-change-workflow.md)
 * [Companion repositories](docs/workspace/companion-repositories.md)
 
 ## Getting started
@@ -19,6 +20,7 @@
 
 * [NestJS architecture](docs/backend/nestjs-architecture.md)
 * [HTTP API reference](docs/api/README.md)
+* [API request and response examples](docs/api/request-response-examples.md)
 * [Database and data model](docs/database/data-model.md)
 * [Chat, RAG, LLM, and approvals](docs/features/chat-rag-approvals.md)
 
@@ -35,3 +37,4 @@
 * [Authentication and authorization](docs/security/README.md)
 * [Deployment and operations](docs/operations/deployment-operations.md)
 * [Staging automation](docs/operations/staging-automation.md)
+

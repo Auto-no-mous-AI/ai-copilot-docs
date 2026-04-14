@@ -291,3 +291,19 @@ By the end of this walkthrough, a developer should understand:
 - how approvals are surfaced operationally
 - how install tokens and API keys are generated
 - how the seeded scenarios map to Angular, React, and vanilla host applications
+
+## Suggested screenshots for onboarding
+
+If you want to make the runbook even easier for new developers, capture screenshots for these views:
+
+- Applications list with all three demo apps visible
+- Supplier Portal Copilot configuration page
+- Usage page showing mode breakdown and traffic trend
+- Ingestion page showing recent failures
+- Audit page showing seeded admin actions
+- Conversations page with approval queue visible
+- Install page showing the script and npm snippets
+- Keycloak login page and post-login landing on /apps`r
+
+These are the most helpful visuals for onboarding because they connect the seeded demo data to the real product screens.
+
