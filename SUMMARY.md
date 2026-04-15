@@ -1,4 +1,4 @@
-﻿# Summary
+# Summary
 
 * [Introduction](README.md)
 
@@ -10,6 +10,7 @@
 * [Monorepo and services map](docs/platform/source-layout.md)
 * [Developer change workflow](docs/platform/developer-change-workflow.md)
 * [Companion repositories](docs/workspace/companion-repositories.md)
+* [Repo ownership matrix](docs/workspace/repo-ownership-matrix.md)
 
 ## Getting started
 
@@ -41,7 +42,3 @@
 * [Deployment and operations](docs/operations/deployment-operations.md)
 * [Staging automation](docs/operations/staging-automation.md)
 * [Troubleshooting gallery](docs/operations/troubleshooting-gallery.md)
-
-
-
-
