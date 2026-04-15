@@ -40,5 +40,6 @@
 
 * [Authentication and authorization](docs/security/README.md)
 * [Deployment and operations](docs/operations/deployment-operations.md)
+* [Environment strategy](docs/operations/environment-strategy.md)
 * [Staging automation](docs/operations/staging-automation.md)
 * [Troubleshooting gallery](docs/operations/troubleshooting-gallery.md)

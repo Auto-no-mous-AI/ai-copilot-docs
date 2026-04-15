@@ -1,6 +1,6 @@
 # Deployment and operations
 
-This chapter summarizes how the platform is currently deployed and operated. Use it together with [Run locally step by step](../getting-started/run-locally-step-by-step.md) and [Staging automation](staging-automation.md).
+This chapter summarizes how the platform is currently deployed and operated. Use it together with [Run locally step by step](../getting-started/run-locally-step-by-step.md), [Environment strategy](environment-strategy.md), and [Staging automation](staging-automation.md).
 
 ## Local first environment
 
@@ -26,6 +26,16 @@ What this gives you:
 - admin portal
 - marketing web
 - Prometheus
+
+## Remote environments
+
+The remote strategy now centers on:
+
+- `playground`: shared developer integration environment
+- `qa`: tester environment with masked production-derived snapshots
+- `prod`: customer environment with the strictest controls
+
+Promotion uses immutable image SHAs and GitOps overlays in `ai-copilot-infra`.
 
 ## What each bootstrap command does
 
@@ -69,15 +79,27 @@ Creates fresh approvals and validates approve and reject flows through the admin
 - Prometheus: `http://127.0.0.1:9090`
 - MinIO console: `http://127.0.0.1:9001`
 
+## GitOps promotion and smoke
+
+The platform repo now owns:
+
+- image build and push to Amazon ECR
+- automatic playground overlay updates
+- manual QA promotion PR creation
+- manual prod promotion PR creation
+- per-environment smoke validation
+
+The infra repo owns:
+
+- Terraform environments
+- Kustomize overlays
+- Argo CD application manifests
+
 ## Staging CI and deployment
 
-The platform currently uses:
+The older `staging` automation still exists for compatibility, but the long-term target model is `playground`, `qa`, and `prod`.
 
-- `staging-deploy.yml`
-- `staging-smoke.yml`
-- `scripts/configure-github-staging.mjs`
-
-See [Staging automation](staging-automation.md) for the complete setup flow.
+See [Staging automation](staging-automation.md) for the legacy-compatible setup flow.
 
 ## Companion deployment and validation repos
 
@@ -102,14 +124,6 @@ Reference manifests live under `ai-copilot-platform/infra/k8s` and cover:
 - secret example
 - API migration job
 
-Typical order:
-
-1. apply secrets
-2. run the migration job
-3. deploy API and worker
-4. deploy admin and marketing
-5. apply ingress
-
 For standalone infrastructure building blocks, also see `ai-copilot-infra/k8s` and `ai-copilot-infra/terraform`.
 
 ## Monitoring
@@ -127,8 +141,10 @@ Prometheus bootstrap config is in:
 For standalone monitoring assets, also see:
 
 - `ai-copilot-observability/alerts`
+- `ai-copilot-observability/alertmanager`
 - `ai-copilot-observability/grafana`
 - `ai-copilot-observability/otel`
+- `ai-copilot-observability/synthetics`
 
 ## Important environment variables
 
@@ -155,20 +171,13 @@ Common API variables:
 - `OIDC_CLIENT_SECRET`
 - `OIDC_REDIRECT_URI`
 
-Worker-specific useful variables:
-
-- `GITHUB_TOKEN`
-- `BITBUCKET_TOKEN`
-- `BITBUCKET_USERNAME`
-- `BITBUCKET_APP_PASSWORD`
-
 ## Operations checklist
 
 When something looks wrong, check in this order:
 
 1. `GET /api/health`
 2. `GET /api/health/ready`
-3. Docker container status
+3. Docker container status or Argo CD sync state
 4. PostgreSQL connectivity and extensions
 5. Redis connectivity
 6. Keycloak reachability and OIDC discovery
