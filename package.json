@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "ai-copilot-docs",
   "private": true,
   "description": "GitBook-style Markdown; preview locally with HonKit",
@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "gifenc": "^1.0.3",
-    "honkit": "^5.1.5",
+    "honkit": "^6.1.7",
     "honkit-plugin-mermaid": "^0.1.4",
     "honkit-plugin-search-plus": "^1.0.0",
     "pngjs": "^7.0.0"
